@@ -7,10 +7,12 @@ const incomeSchema = new mongoose.Schema({
     },
     dateCreated:{
         type:Date,
-        default:new Date.now
+        default:Date.now
     },
     incomeCategory:{
         type:mongoose.Types.ObjectId,
         ref:"incomeCategory"
     }
-}) 
+});
+
+module.exports = IncomeSchems = mongoose.model("incomes",incomeSchema);
