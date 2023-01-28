@@ -8,7 +8,7 @@ const addExpense = async (req, res) => {
       req.body;
     const newExpense = new ExpenseModel();
     if (amount > 0) {
-      newExpense.amount = amount;
+      newExpense.amount = -amount;
     } else {
       return res.status(201).send({
         status: "error",
@@ -46,7 +46,7 @@ const updateExpense = async (req, res) => {
       }
       if (amount) {
         if (amount > 0) {
-          expenseToUpdate.amount = amount;
+          expenseToUpdate.amount = -amount;
         } else {
           return res.status(201).send({
             status: "error",
