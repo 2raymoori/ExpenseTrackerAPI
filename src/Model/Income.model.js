@@ -1,11 +1,12 @@
 const mongoose= require("mongoose");
 
 const incomeSchema = new mongoose.Schema({
-    amount:{
+	user:{type:mongoose.Schema.Types.ObjectId,ref:'users'},
+	amount:{
         type:Number,
         required:true
     },
-    dateCreated:{
+    createdAt:{
         type:Date,
         default:Date.now
     },

@@ -1,11 +1,13 @@
 const mongoose  = require("mongoose");
 
 const incomeCategorySchema = new mongoose.Schema({
-    name:{
+	user:{type:mongoose.Schema.Types.ObjectId,ref:"users"},
+
+	name:{
         type:String,
         required:true
     },
-    date:{
+    createdAt:{
         type: Date,
         default:Date.now
     }

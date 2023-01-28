@@ -1,37 +1,43 @@
+
+const { ObjectId } = require("mongodb").ObjectID;
 const ExpenseCategoryModel = require("../Model/ExpenseCategory.model")
 
 
 const addCategory = async (req,res)=>{
    try {
        const {categoryName} = req.body;
+       const curUser = req.user.id;
+       console.log(req.user);
        if(categoryName && categoryName.trim().length>0){
-           const newCategory = new ExpenseCategoryModel({
-               name:categoryName
-           });
-           await newCategory.save();
-
-        res.status(200).send({"status":"Success","data":`${newCategory}`})
+           const newCategory = new ExpenseCategoryModel();
+           newCategory.name = categoryName;
+           newCategory.user = curUser;
+          await newCategory.save();
+        res.status(200).send({"status":"Success","data":`${newCategory}`});
        }else{
            res.status(404).json({"status":"Error","data":"Sorry Category name is required..."})
            console.log("Sorry category name is required...")
        }
    } catch (error) {
-       
+       console.log(error);
+       res.status(500).send({"status":"Error","data":error});
    }
 }
 
 const allCategory = async(req,res)=>{
     try {
-        const allCategories = await ExpenseCategoryModel.find();
+        console.log(req.user);
+        const allCategories = await ExpenseCategoryModel.find({user:req.user.id});
         res.status(200).send({"status":"Success","data":allCategories});
     } catch (error) {
         res.status(500).send({"status":"Error","data":error.message})
     }
-}
+} //63d44fbe2d52ab07f7de63a6  63d453f7098649871310daeb
 const getCategory = async(req,res)=>{
     try {
-        const {id} = req.params
-        const currentCategory = await ExpenseCategoryModel.findById(id);
+        const {id} = req.params;
+        const curUser = req.user.id;
+        const currentCategory = await ExpenseCategoryModel.findById({"_id":id,user:curUser});
         if(currentCategory){
             res.status(200).send({"status":"Success","data":currentCategory})
         }else{
@@ -50,7 +56,8 @@ const updateCategory = async(req,res)=>{
     try {
         const {id} = req.params;
         const {catName} = req.body;
-        const categoryToUpdate = await ExpenseCategoryModel.findByIdAndUpdate(id);
+        const curUser = req.user.id;
+        const categoryToUpdate = await ExpenseCategoryModel.findByIdAndUpdate({"_id":id,user:curUser});
         if(categoryToUpdate){
             categoryToUpdate.name = catName;
             await categoryToUpdate.save();
@@ -68,12 +75,13 @@ const updateCategory = async(req,res)=>{
 const deleteCategory = async(req,res)=>{
     try {
         const {id} = req.params;
-        const categoryToDelete = await ExpenseCategoryModel.findByIdAndDelete(id);
+        const curUser = req.user.id;
+        const categoryToDelete = await ExpenseCategoryModel.findByIdAndDelete({"_id":id,user:curUser});
         if(categoryToDelete){
             await categoryToDelete.delete();
-            res.status(200).send({"status":"Success","data":categoryToDelete});
+            return res.status(200).send({"status":"Success","data":categoryToDelete});
         }else{
-            res.status(201).send({"status":"Error","data":"Sorry There is no such Category with this id"});
+            return res.status(201).send({"status":"Error","data":"Sorry There is no such Category with this id"});
         }
 
     } catch (error) {
