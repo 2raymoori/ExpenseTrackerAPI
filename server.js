@@ -8,7 +8,7 @@ const IncomeCategoryRouter = require("./src/Router/IncomeCategory.router");
 const IncomeRouter = require("./src/Router/Income.router");
 const userRouter = require('./src/Router/User.router')
 const authRouter = require('./src/Router/Auth.Route')
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 connectDB();

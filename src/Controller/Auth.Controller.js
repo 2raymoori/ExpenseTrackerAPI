@@ -11,16 +11,15 @@ const login = async(req,res)=>{
             const curUser = findUser[0];
             const hashedPassword = curUser.password;
             const verifyPass =await decryptValidatePassword(password,hashedPassword);
-            if(verifyPass){
-                
+            if(verifyPass){ 
                 const getToken = generateToken({"id":curUser.id,"email":curUser.email,"fName":curUser.fName});
-                return res.status(200).json({"status":"success","msg":getToken});
+                return res.status(200).json({"status":"success","token":getToken,"user":curUser});
             }else{
-                return res.status(400).json({"status":"error","msg":"NO such user with these credentials."})
+                return res.status(201).json({"status":"error","msg":"NO such user with these credentials."})
             }
         }
         else{
-            return res.status(400).json({"status":"error","msg":"NO such user with these credentials."})
+            return res.status(201).json({"status":"error","msg":"NO such user with these credentials."})
         }
     }catch(err){
         return res.status(500).json({"msg":"Sorry There exists an error in the server."});
@@ -34,7 +33,7 @@ const Signup = async(req,res)=>{
         // check for emai existence first. 
         const doesUserExists = await UserModel.find({"email":email});
         if(doesUserExists?.length === 0) {
-            console.log(req.body);
+           // console.log(req.body);
             const newUser = new UserModel();
             newUser.email = email;
             newUser.password = hashedPassword;
@@ -42,9 +41,9 @@ const Signup = async(req,res)=>{
             newUser.lName = lName; 
             await newUser.save();
             const getToken = generateToken({"id":newUser.id,"email":newUser.email,"fName":newUser.fName});
-            return res.status(200).json({"status":"success","msg":getToken});
+            return res.status(200).json({"status":"success","token":getToken,"user":newUser});
         }else{
-            return res.status(400).json({"msg":"Sorry There exists a user in the system with this email. Please Try again with a different email"});
+            return res.status(201).json({"msg":"Sorry There exists a user in the system with this email. Please Try again with a different email"});
         }
     } catch (error) {
         return res.status(500).json({"msg":"Sorry There exists an error in the server."});
