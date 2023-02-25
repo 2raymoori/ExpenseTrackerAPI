@@ -13,14 +13,14 @@ const addCategory = async (req,res)=>{
            newCategory.name = categoryName;
            newCategory.user = curUser;
           await newCategory.save();
-        res.status(200).send({"status":"Success","data":`${newCategory}`});
+        res.status(200).send({"status":"Success","msg":`${newCategory}`});
        }else{
-           res.status(404).json({"status":"Error","data":"Sorry Category name is required..."})
+           res.status(201).json({"status":"Error","msg":"Sorry Category name is required..."})
            console.log("Sorry category name is required...")
        }
    } catch (error) {
        console.log(error);
-       res.status(500).send({"status":"Error","data":error});
+       res.status(500).send({"status":"Error","msg":error});
    }
 }
 

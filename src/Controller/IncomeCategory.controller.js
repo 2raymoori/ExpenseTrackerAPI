@@ -9,11 +9,11 @@ const addCategory = async (req, res) => {
       newIncomeCategory.name = catName;
       newIncomeCategory.user = userId;
       await newIncomeCategory.save();
-      res.status(200).send({ status: "Success", data: newIncomeCategory });
+      res.status(200).send({ status: "Success", msg: newIncomeCategory });
     } else {
       res.status(201).send({
         status: "Error",
-        data: "Sorry Income Category name is required",
+        msg: "Sorry Income Category name is required",
       });
     }
   } catch (error) {
