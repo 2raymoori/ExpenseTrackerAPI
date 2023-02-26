@@ -12,8 +12,8 @@ const addCategory = async (req,res)=>{
            const newCategory = new ExpenseCategoryModel();
            newCategory.name = categoryName;
            newCategory.user = curUser;
-          await newCategory.save();
-        res.status(200).send({"status":"Success","msg":`${newCategory}`});
+         // await newCategory.save();
+        res.status(200).send({"status":"Success","msg":newCategory});
        }else{
            res.status(201).json({"status":"Error","msg":"Sorry Category name is required..."})
            console.log("Sorry category name is required...")
