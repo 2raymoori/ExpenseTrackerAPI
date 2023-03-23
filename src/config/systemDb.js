@@ -5,7 +5,7 @@ const CONNURL = 'mongodb://localhost:27017/incomeExpense';
 
 const connectDB = async ()=>{
     try {
-        await mongoose.connect(dbURL);
+        await mongoose.connect(CONNURL);
         console.log("Database connected Successfully...")
     } catch (error) {
         console.log("Server Error "+error.message);

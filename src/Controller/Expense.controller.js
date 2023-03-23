@@ -126,7 +126,7 @@ const expenseByid = async (req, res) => {
   try {
     const { id } = req.params;
     const curUser = req.user.id;
-    const currentExpense = await ExpenseModel.findById({
+    const currentExpense = await ExpenseModel.find({
       _id: id,
       user: curUser,
     })

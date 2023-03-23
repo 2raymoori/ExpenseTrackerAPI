@@ -126,7 +126,8 @@ const getIncome = async (req, res) => {
         .populate("incomeCategory", ["name"])
         .populate("user", ["email", "fName"]);
       if (currentIncome) {
-        res.status(200).send({ status: "Success", data: currentIncome });
+        console.log(currentIncome);
+        return res.status(200).send({ status: "Success", data: currentIncome });
       } else {
         return res
           .status(201)
