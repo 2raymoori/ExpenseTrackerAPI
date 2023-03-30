@@ -18,6 +18,9 @@ app.use(bodyParser.json());
 
 app.use(cors());
 // API ENDPOINTS / ROUTES
+app.get("/",(req,res)=>{
+    return res.json({"status":"200","msg":"welcome"})
+})
 app.use("/api/expensecategory",CategoryRouter);
 app.use("/api/expense",ExpenseRouter);
 app.use("/api/incomecategory",IncomeCategoryRouter);
