@@ -3,9 +3,13 @@ const config = require('config');
 
 const authenticate = (req,res,next)=>{
     // fetch the token from the request header
-    const token = req.header('user-auth-token')
+    ;
+	const token = req.header('user-auth-token')
     // return error if no token given from the header and terminate the request.
+    console.log("Token!!!");
+    console.log(token);
     if(!token){
+
         return res.status(401).json({
             status:"Error",
             msg: {info:'No Token, authorization denied'}

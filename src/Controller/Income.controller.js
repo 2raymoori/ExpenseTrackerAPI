@@ -1,3 +1,4 @@
+const ExpenseCategoryModel = require("../Model/ExpenseCategory.model");
 const incomeSchema = require("../Model/Income.model");
 
 const addIncome = async (req, res) => {
@@ -26,7 +27,7 @@ const addIncome = async (req, res) => {
         data: "Sorry Both name and Income Category are required And the income amount must be Valid ( >0)",
       });
     }
-  } catch (error) {
+ ExpenseCategoryModel } catch (error) {
     return res.status(500).send({ status: "Error", data: error.message });
   }
 };
